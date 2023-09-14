@@ -1,7 +1,7 @@
 # app/main.py
 
 import streamlit as st
-from .data import questions
+from app.data import questions
 
 def custom_css(font_size):
     st.markdown(
