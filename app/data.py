@@ -460,5 +460,118 @@ questions = [
             'answer': 'B. No',
             'explanation': '''Explanation: The proposed solution does not meet the goal because high-concurrency clusters do not support Scala. Since the workload for jobs requires notebooks with Scala, Python, and SQL, high-concurrency clusters are not suitable for this purpose. Therefore, the correct answer is "B. No."
             Reference: https://docs.microsoft.com/en-us/azure/databricks/clusters/configure'''
+        },
+        {
+            'question': 'You are designing a statistical analysis solution that will use custom proprietary Python functions on near real-time data from Azure Event Hubs. You need to recommend which Azure service to use to perform the statistical analysis. The solution must minimize latency. What should you recommend?',
+            'answer': 'Azure Databricks',
+            'explanation': '''Explanation: Azure Databricks is the recommended Azure service for performing statistical analysis on near real-time data from Azure Event Hubs while minimizing latency. Azure Databricks provides support for custom proprietary Python functions and is designed to handle real-time and big data workloads.
+            Reference: https://stackoverflow.com/questions/58097539/execute-azure-streaming-analytics-queries-from-a-python-script'''
+        },
+        {
+            'question': 'You are designing an Azure Stream Analytics solution that will analyze Twitter data. You need to count the tweets in each 10-second window. The solution must ensure that each tweet is counted only once. Solution: You use a hopping window that uses a hop size of 10 seconds and a window size of 10 seconds. Does this meet the goal?',
+            'answer': 'Yes',
+            'explanation': '''To make a Hopping window the same as a Tumbling window, specify the hop size to be the same as the window size.
+            Reference: https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-window-functions#hopping-window'''
+        },
+        {
+            'question': 'You are designing an Azure Stream Analytics solution that will analyze Twitter data. You need to count the tweets in each 10-second window. The solution must ensure that each tweet is counted only once. Solution: You use a hopping window that uses a hop size of 5 seconds and a window size of 10 seconds. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''Instead use a tumbling window. Tumbling windows are a series of fixed-sized, non-overlapping and contiguous time intervals. 
+            Reference: https://docs.microsoft.com/en-us/stream-analytics-query/tumbling-window-azure-stream-analytics'''
+        },
+        {
+            'question': 'You are designing an Azure Databricks table. The table will ingest an average of 20 million streaming events per day. You need to persist the events in the table for use in incremental load pipeline jobs in Azure Databricks. The solution must minimize storage costs and incremental load times. What should you include in the solution?',
+            'answer': 'Sink to Azure Queue storage.',
+            'explanation': '''The Databricks ABS-AQS connector uses Azure Queue Storage (AQS) to provide an optimized file source that lets you find new files written to an Azure Blob storage (ABS) container without repeatedly listing all of the files. This provides two major advantages: Lower latency and lower costs. 
+            Reference: https://docs.microsoft.com/en-us/azure/databricks/spark/latest/structured-streaming/aqs'''
+        },
+        {
+            'question': 'You have an Azure Databricks workspace named workspace1 in the Standard pricing tier. You need to configure workspace1 to support autoscaling all-purpose clusters. The solution must meet the following requirements: • Automatically scale down workers when the cluster is underutilized for three minutes. • Minimize the time it takes to scale to the maximum number of workers. • Minimize costs. What should you do first?',
+            'answer': 'Upgrade workspace1 to the Premium pricing tier.',
+            'explanation': '''Automated (job) clusters always use optimized autoscaling. The type of autoscaling performed on all-purpose clusters depends on the workspace configuration. Standard autoscaling is used by all-purpose clusters in workspaces in the Standard pricing tier. Optimized autoscaling is used by all-purpose clusters in the Azure Databricks Premium Plan. 
+            Reference: https://docs.databricks.com/clusters/cluster-config-best-practices.html'''
+        },
+        {
+            'question': 'You are designing an Azure Stream Analytics solution that will analyze Twitter data. You need to count the tweets in each 10-second window. The solution must ensure that each tweet is counted only once. Solution: You use a tumbling window, and you set the window size to 10 seconds. Does this meet the goal?',
+            'answer': 'Yes',
+            'explanation': '''Tumbling windows are a series of fixed-sized, non-overlapping and contiguous time intervals. The following diagram illustrates a stream with a series of events and how they are mapped into 10-second tumbling windows.
+    Reference: https://docs.microsoft.com/en-us/stream-analytics-query/tumbling-window-azure-strea'''
+        },
+        {
+            'question': 'You are designing an Azure Stream Analytics solution that will analyze Twitter data. You need to count the tweets in each 10-second window. The solution must ensure that each tweet is counted only once. Solution: You use a session window that uses a timeout size of 10 seconds. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''Instead use a tumbling window. Tumbling windows are a series of fixed-sized, non-overlapping and contiguous time intervals.
+    Reference: https://docs.microsoft.com/en-us/stream-analytics-query/tumbling-window-azure-strea'''
+        },
+        {
+            'question': 'You use Azure Stream Analytics to receive data from Azure Event Hubs and to output the data to an Azure Blob Storage account. You need to output the count of records received from the last five minutes every minute. Which windowing function should you use?',
+            'answer': 'Hopping',
+            'explanation': '''Hopping window functions hop forward in time by a fixed period. It may be easy to think of them as Tumbling windows that can overlap and be emitted more often than the window size. Events can belong to more than one Hopping window result set. To make a Hopping window the same as a Tumbling window, specify the hop size to be the same as the window size.'''
+        },
+        {
+            'question': 'You plan to create an Azure Databricks workspace that has a tiered structure. The workspace will contain the following three workloads:\n\n• A workload for data engineers who will use Python and SQL\n• A workload for jobs that will run notebooks that use Python, Scala, and SQL.\n• A workload that data scientists will use to perform ad hoc analysis in Scala and R.\nThe enterprise architecture team at your company identifies the following standards for Databricks environments:\n\n• The data engineers must share a cluster.\n• The job cluster will be managed by using a request process whereby data scientists and data engineers provide packaged notebooks for deployment to the cluster.\n• All the data scientists must be assigned their own cluster that terminates automatically after 120 minutes of inactivity. Currently, there are three data scientists.\nYou need to create the Databricks clusters for the workloads.\n\nSolution: You create a Standard cluster for each data scientist, a Standard cluster for the data engineers, and a High Concurrency cluster for the jobs.\nDoes this meet the goal?',
+            'answer': 'No',
+            'explanation': '''A workload for data engineers who will use Python and SQL. --> high concurrency\n• A workload for jobs that will run notebooks that use Python, Scala, and SQL. -> standard\n• A workload that data scientists will use to perform ad hoc analysis in Scala and R. -> standard because high concurrency does not support Scala\nhttps://stackoverflow.com/questions/65869399/high-concurrency-clusters-in-databricks'''
+        },
+        {
+            'question': 'You have the following Azure Data Factory pipelines: Ingest Data from System1, Ingest Data from System2, Populate Dimensions, and Populate Facts. Ingest Data from System1 and Ingest Data from System2 have no dependencies. Populate Dimensions must execute after Ingest Data from System1 and Ingest Data from System2. Populate Facts must execute after the Populate Dimensions pipeline. All the pipelines must execute every eight hours. What should you do to schedule the pipelines for execution?',
+            'answer': 'Create a parent pipeline that contains the four pipelines and use a schedule trigger.',
+            'explanation': '''The parent pipeline has 4 execute pipeline activities. Ingest 1 and Ingest 2 have no dependencies. Dimension pipeline has two dependencies from 'on completion' outputs of both Ingest 1 and Ingest 2 pipelines. Fact pipeline has one 'on completion' dependency on the Dimension pipeline. Absolutely nothing to do with a tumbling window trigger.
+            Reference: https://docs.microsoft.com/en-us/azure/data-factory/concepts-pipeline-execution-triggers'''
+        },
+        {
+            'question': 'You have an Azure Data Lake Storage account that contains a staging zone. You need to design a daily process to ingest incremental data from the staging zone, transform the data by executing an R script, and then insert the transformed data into a data warehouse in Azure Synapse Analytics. Solution: You use an Azure Data Factory schedule trigger to execute a pipeline that copies the data to a staging table in the data warehouse, and then uses a stored procedure to execute the R script. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''You cannot execute the R script using a stored procedure activity. R script cannot be run in Azure Synapse Analytics. sp_execute_external_script can only be applied to SQL Server 2016 (13.×) and later, Azure SQL Managed Instance. 
+            Reference: https://docs.microsoft.com/en-us/azure/architecture/data-guide/technology-choices/r-developers-quide'''
+        },
+        {
+            'question': 'You plan to create an Azure Databricks workspace that has a tiered structure. The workspace will contain the following three workloads:\n• A workload for data engineers who will use Python and SQL.\n• A workload for jobs that will run notebooks that use Python, Scala, and SQL.\n• A workload that data scientists will use to perform ad hoc analysis in Scala and R.\nThe enterprise architecture team at your company identifies the following standards for Databricks environments:\n• The data engineers must share a cluster.\n• The job cluster will be managed by using a request process whereby data scientists and data engineers provide packaged notebooks for deployment to the cluster.\n• All the data scientists must be assigned their own cluster that terminates automatically after 120 minutes of inactivity. Currently, there are three data scientists.\nYou need to create the Databricks clusters for the workloads. Solution: You create a High Concurrency cluster for each data scientist, a High Concurrency cluster for the data engineers, and a Standard cluster for the jobs. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''Data Engineers: Correct, they are working together, they need a High-Concurrency cluster. Jobs: Correct, Standard Cluster since it supports SCALA. HOWEVER, Data Scientists need a cluster that terminates after 120 minutes automatically, which means only Standard and Single Node clusters can support that. So the correct answer is NO. 
+            Reference: https://docs.azuredatabricks.net/clusters/configure.html'''
+        },
+        {
+            'question': 'You are designing an Azure Databricks cluster that runs user-defined local processes. You need to recommend a cluster configuration that meets the following requirements:\n• Minimize query latency.\n• Maximize the number of users that can run queries on the cluster at the same time.\n• Reduce overall costs without compromising other requirements.\nWhich cluster type should you recommend?',
+            'answer': 'High Concurrency with Autoscaling',
+            'explanation': '''A High Concurrency cluster is a managed cloud resource. The key benefits of High Concurrency clusters are that they provide fine-grained sharing for maximum resource utilization and minimum query latencies. Databricks chooses the appropriate number of workers required to run your job. This is referred to as autoscaling. Autoscaling makes it easier to achieve high cluster utilization because you don't need to provision the cluster to match a workload. 
+            Reference: https://docs.microsoft.com/en-us/azure/databricks/clusters/configure'''
+        },
+        {
+            'question': 'You are creating a new notebook in Azure Databricks that will support R as the primary language but will also support Scala and SQL. Which switch should you use to switch between languages?',
+            'answer': '%<language>',
+            'explanation': '''To change the language in Databricks cells to either Scala, SQL, Python, or R, prefix the cell with '%' followed by the language. For example, %python, '%'r, '%'scala, '%'sql. 
+            Reference: https://www.theta.co.nz/news-blogs/tech-blog/enhancing-digital-twins-part-3-predictive-maintenance-with-azure-databricks'''
+        },
+        {
+            'question': 'You have an Azure Data Factory pipeline that performs an incremental load of source data to an Azure Data Lake Storage Gen2 account. Data to be loaded is identified by a column named LastUpdatedDate in the source table. You plan to execute the pipeline every four hours. You need to ensure that the pipeline execution meets the following requirements: • Automatically retries the execution when the pipeline run fails due to concurrency or throttling limits. • Supports backfilling existing data in the table. Which type of trigger should you use?',
+            'answer': 'tumbling window',
+            'explanation': '''In case of pipeline failures, a tumbling window trigger can retry the execution of the referenced pipeline automatically, using the same input parameters, without the user intervention. This can be specified using the property 'retryPolicy' in the trigger definition. 
+            Reference: https://docs.microsoft.com/en-us/azure/data-factory/how-to-create-tumbling-window-trigger'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a table named Table1. You have files that are ingested and loaded into an Azure Data Lake Storage Gen2 container named container1. You plan to insert data from the files in container1 into Table1 and transform the data. Each row of data in the files will produce one row in the serving layer of Table1. You need to ensure that when the source data files are loaded to container1, the DateTime is stored as an additional column in Table1. Solution: In an Azure Synapse Analytics pipeline, you use a data flow that contains a Derived Column transformation. Does this meet the goal?',
+            'answer': 'Yes',
+            'explanation': '''Data flows are available both in Azure Data Factory and Azure Synapse Pipelines. Use the derived column transformation to generate new columns in your data flow or to modify existing fields. 
+            Reference: https://docs.microsoft.com/en-us/azure/data-factory/data-flow-derived-column'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a table named Table1. You have files that are ingested and loaded into an Azure Data Lake Storage Gen2 container named container1. You plan to insert data from the files in container1 into Table1 and transform the data. Each row of data in the files will produce one row in the serving layer of Table1. You need to ensure that when the source data files are loaded to container1, the DateTime is stored as an additional column in Table1. Solution: You use a dedicated SQL pool to create an external table that has an additional DateTime column. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''An external table is based on a source flat file structure. It seems to make no sense to add additional date time columns to such a table. 
+            Reference: https://docs.microsoft.com/en-us/azure/data-factory/data-flow-derived-column'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a table named Table1. You have files that are ingested and loaded into an Azure Data Lake Storage Gen2 container named container1. You plan to insert data from the files in container1 into Table1 and transform the data. Each row of data in the files will produce one row in the serving layer of Tablel. You need to ensure that when the source data files are loaded to container1, the DateTime is stored as an additional column in Table1. Solution: You use an Azure Synapse Analytics serverless SQL pool to create an external table that has an additional DateTime column. Does this meet the goal?',
+            'answer': 'No',
+            'explanation': '''Instead use the derived column transformation to generate new columns in your data flow or to modify existing fields. 
+            Reference: https://docs.microsoft.com/en-us/azure/data-factory/data-flow-derived-column'''
+        },
+        {
+            'question': 'You are designing an enterprise data warehouse in Azure Synapse Analytics that will contain a table named Customers. Customers will contain credit card information. You need to recommend a solution to provide salespeople with the ability to view all the entries in Customers. The solution must prevent all the salespeople from viewing or inferring the credit card information. What should you include in the recommendation?',
+            'answer': 'column-level security',
+            'explanation': '''Data masking does not protect against inferring with the data. 
+            Reference: https://docs.microsoft.com/nl-nl/sql/relational-databases/security/dynamic-data-maski ng?view=sql-server-ver15'''
         }
+
 ]
