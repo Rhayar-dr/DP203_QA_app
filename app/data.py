@@ -671,6 +671,310 @@ questions = [
             'explanation': '''Explanation: Correct Answer: C
     Data masking does not protect against inferring with the data.
     Reference: https://docs.microsoft.com/nl-nl/sql/relational-databases/security/dynamic-data-masking?view=sql-server-ver15'''
+        },
+        {
+            'question': 'You are designing a streaming data solution that will ingest variable volumes of data. You need to ensure that you can change the partition count after creation. Which service should you use to ingest the data?',
+            'choices': [
+                'A. Azure Event Hubs Dedicated',
+                'B. Azure Stream Analytics',
+                'C. Azure Data Factory',
+                'D. Azure Synapse Analytics'
+            ],
+            'answer': 'A. Azure Event Hubs Dedicated',
+            'explanation': '''Explanation: Correct Answer: A
+    You can't change the partition count for an event hub after its creation except for the event hub in a dedicated cluster.
+    Reference: https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features'''
+        },
+        {
+            'question': 'You are designing a date dimension table in an Azure Synapse Analytics dedicated SQL pool. The date dimension table will be used by all the fact tables. Which distribution type should you recommend to minimize data movement?',
+            'choices': [
+                'A. HASH',
+                'B. REPLICATE',
+                'C. ROUND_ROBIN'
+            ],
+            'answer': 'B. REPLICATE',
+            'explanation': '''Explanation: Correct Answer: B
+    A replicated table has a full copy of the table available on every Compute node. Queries run fast on replicated tables since joins on replicated tables don't require data movement. Replication requires extra storage, though, and isn't practical for large tables.
+    Incorrect Answers:
+    A: A hash distributed table is designed to achieve high performance for queries on large tables.'''
+        },
+        {
+            'question': 'You have a SQL pool in Azure Synapse that contains a table named do.Customers. The table contains a column name Email. You need to prevent nonadministrative users from seeing the full email addresses in the Email column. The users must see values in a format of a XXX@XXXX.com instead. What should you do?',
+            'choices': [
+                'A. From Microsoft SQL Server Management Studio, set an email mask on the Email column.',
+                'B. From the Azure portal, set a mask on the Email column.',
+                'C. From Microsoft SQL Server Management Studio, grant the SELECT permission to the users for all the columns in the do. Customers table except Email.',
+                'D. From the Azure portal, set a sensitivity classification of Confidential for the Email column.'
+            ],
+            'answer': 'A. From Microsoft SQL Server Management Studio, set an email mask on the Email column.',
+            'explanation': '''Explanation: Correct Answer: A
+    The Email masking method, which exposes the first letter and replaces the domain with XXX.com using a constant string prefix in the form of an email address.
+    axX@XXXX.com
+    Reference: https://docs.microsoft.com/en-us/azure/azure-sql/database/dynamic-data-masking-ov
+    erview'''
+        },
+        {
+            'question': 'You are designing an Azure Synapse solution that will provide a query interface for the data stored in an Azure Storage account. The storage account is only accessible from a virtual network. You need to recommend an authentication mechanism to ensure that the solution can access the source data. What should you recommend?',
+            'choices': [
+                'A. a managed identity',
+                'B. anonymous public read access',
+                'C. a shared key'
+            ],
+            'answer': 'A. a managed identity',
+            'explanation': '''Explanation: Correct Answer: A
+    Managed Identity authentication is required when your storage account is attached to a VNet.
+    Reference: https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/quicks
+    tart-bulk-load-copy-tsql-examples'''
+        },
+        {
+            'question': 'You are developing an application that uses Azure Data Lake Storage Gen2. You need to recommend a solution to grant permissions to a specific application for a limited time period. What should you include in the recommendation?',
+            'choices': [
+                'A. role assignments',
+                'B. shared access signatures (SAS)',
+                'C. Azure Active Directory (Azure AD) identities',
+                'D. account keys'
+            ],
+            'answer': 'B. shared access signatures (SAS)',
+            'explanation': '''Explanation: Correct Answer: B
+    A shared access signature (SAS) provides secure delegated access to resources in your storage account. With a SAS, you have granular control over how a client can access your data. For example:
+    What resources the client may access.
+    What permissions they have to those resources.
+    How long the SAS is valid.
+    Reference: https://docs.microsoft.com/en-us/azure/storage/common/storage-sas-overview'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a table named Contacts. Contacts contains a column named Phone. You need to ensure that users in a specific role only see the last four digits of a phone number when querying the Phone column. What should you include in the solution?',
+            'choices': [
+                'A. table partitions',
+                'B. a default value',
+                'C. row-level security (RLS)',
+                'D. column encryption',
+                'E. dynamic data masking'
+            ],
+            'answer': 'E. dynamic data masking',
+            'explanation': '''Explanation: Correct Answer: E
+    Dynamic data masking helps prevent unauthorized access to sensitive data by enabling customers to designate how much of the sensitive data to reveal with minimal impact on the application layer. It’s a policy-based security feature that hides the sensitive data in the result set of a query over designated database fields, while the data in the database is not changed.
+    Reference: https://docs.microsoft.com/en-us/azure/azure-sql/database/dynamic-data-masking-overview'''
+        },
+        {
+            'question': 'A company purchases loT devices to monitor manufacturing machinery. The company uses an Azure loT Hub to communicate with the loT devices. The company must be able to monitor the devices in real-time. You need to design the solution. What should you recommend?',
+            'choices': [
+                'A. Azure Data Factory instance using Azure Portal',
+                'B. Azure Data Factory instance using Azure PowerShell',
+                'C. Azure Stream Analytics cloud job using Azure Portal',
+                'D. Azure Data Factory instance using Microsoft Visual Studio'
+            ],
+            'answer': 'C. Azure Stream Analytics cloud job using Azure Portal',
+            'explanation': '''Explanation: Correct Answer: C
+    In a real-world scenario, you could have hundreds of these sensors generating events as a stream. Ideally, a gateway device would run code to push these events to Azure Event Hubs or Azure loT Hubs. Your Stream Analytics job would ingest these events from Event Hubs and run real-time analytics queries against the streams.
+    Create a Stream Analytics job:
+    In the Azure portal, select + Create a resource from the left navigation menu. Then, select Stream Analytics job from Analytics.
+    Reference: https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-get-started-with-azure-stream-analytics-to-process-data-from-iot-devices'''
+        },
+        {
+            'question': 'You have a partitioned table in an Azure Synapse Analytics dedicated SQL pool. You need to design queries to maximize the benefits of partition elimination. What should you include in the Transact-SQL queries?',
+            'choices': [
+                'A. JOIN',
+                'B. WHERE',
+                'C. DISTINCT',
+                'D. GROUP BY'
+            ],
+            'answer': 'B. WHERE',
+            'explanation': '''Explanation: Correct Answer: B
+    Data partition elimination refers to the database server's ability to determine, based on query predicates. When you add the "WHERE" clause to your T-SQL query it allows the query optimizer accesses only the relevant partitions to satisfy the filter criteria of the query - which is what partition elimination is all about.
+    Reference: https://stackoverflow.com/questions/51677471/what-is-a-difference-between-table-distribution-and-table-partition-in-sql/51677595'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a large fact table. The table contains 50 columns and 5 billion rows and is a heap. Most queries against the table aggregate values from approximately 100 million rows and return only two columns. You discover that the queries against the fact table are very slow. Which type of index should you add to provide the fastest query times?',
+            'choices': [
+                'A. nonclustered columnstore',
+                'B. clustered columnstore',
+                'C. nonclustered',
+                'D. clustered'
+            ],
+            'answer': 'B. clustered columnstore',
+            'explanation': '''Explanation: Correct Answer: B
+    Clustered columnstore indexes are one of the most efficient ways you can store your data in dedicated SQL pool. Columnstore tables won't benefit a query unless the table has more than 60 million rows.'''
+        },
+        {
+            'question': 'You create an Azure Databricks cluster and specify an additional library to install. When you attempt to load the library to a notebook, the library is not found. You need to identify the cause of the issue. What should you review?',
+            'choices': [
+                'A. notebook logs',
+                'B. cluster event logs',
+                'C. global init scripts logs',
+                'D. workspace logs'
+            ],
+            'answer': 'B. cluster event logs',
+            'explanation': '''Explanation: Correct Answer: B
+    Azure Databricks provides three kinds of logging of cluster-related activity: 
+    - Cluster event logs, which capture cluster lifecycle events, like creation, termination, configuration edits, and so on. 
+    - Apache Spark driver and worker logs, which you can use for debugging. 
+    - Cluster init-script logs, valuable for debugging init scripts.
+    Reference: 
+    https://docs.microsoft.com/en-us/azure/databricks/clusters/clusters-manage#event-lo
+    g'''
+        },
+        {
+            'question': 'You have an Azure data factory. You need to examine the pipeline failures from the last 60 days. What should you use?',
+            'choices': [
+                'A. the Activity log blade for the Data Factory resource',
+                'B. the Monitor & Manage app in Data Factory',
+                'C. the Resource health blade for the Data Factory resource',
+                'D. Azure Monitor'
+            ],
+            'answer': 'D. Azure Monitor',
+            'explanation': '''Explanation: Correct Answer: D
+    Data Factory stores pipeline-run data for only 45 days. Use Azure Monitor if you want to keep that data for a longer time.
+    Reference: 
+    https://docs.microsoft.com/en-us/azure/data-factory/monitor-using-azure-monitor'''
+        },
+        {
+            'question': 'You are monitoring an Azure Stream Analytics job. The Backlogged Input Events count has been 20 for the last hour. You need to reduce the Backlogged Input Events count. What should you do?',
+            'choices': [
+                'A. Drop late arriving events from the job.',
+                'B. Add an Azure Storage account to the job.',
+                'C. Increase the streaming units for the job.',
+                'D. Stop the job.'
+            ],
+            'answer': 'C. Increase the streaming units for the job.',
+            'explanation': '''Explanation: Correct Answer: C
+    General symptoms of the job hitting system resource limits include:
+    • If the backlog event metric keeps increasing, it's an indicator that the system resource is constrained (either because of output sink throttling, or high CPU).
+    Note: Backlogged Input Events: Number of input events that are backlogged. A non-zero value for this metric implies that your job isn't able to keep up with the number of incoming events. If this value is slowly increasing or consistently non-zero, you should scale out your job: adjust Streaming Units.
+    Reference: 
+    https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-scale-jobs
+    https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-monitoring'''
+        },
+        {
+            'question': 'You are designing an Azure Databricks interactive cluster. The cluster will be used infrequently and will be configured for auto-termination. You need to use that the cluster configuration is retained indefinitely after the cluster is terminated. The solution must minimize costs. What should you do?',
+            'choices': [
+                'A. Pin the cluster.',
+                'B. Create an Azure runbook that starts the cluster every 90 days.',
+                'C. Terminate the cluster manually when processing completes.',
+                'D. Clone the cluster after it is terminated.'
+            ],
+            'answer': 'A. Pin the cluster.',
+            'explanation': '''Explanation: Correct Answer: A
+    30 days after a cluster is terminated, it is permanently deleted. To keep an interactive cluster configuration even after a cluster has been terminated for more than 30 days, an administrator can pin the cluster. Up to 20 clusters can be pinned.
+    Reference:
+    https://docs.databricks.com/clusters/clusters-manage.html#pin-a-cluster
+    https://docs.azuredatabricks.net/user-guide/clusters/terminate.html'''
+        },
+        {
+            'question': 'You have an Azure data solution that contains an enterprise data warehouse in Azure Synapse Analytics named DW1. Several users execute ad hoc queries to DW1 concurrently. You regularly perform automated data loads to DW1. You need to ensure that the automated data loads have enough memory available to complete quickly and successfully when the ad hoc queries run. What should you do?',
+            'choices': [
+                'A. Hash distribute the large fact tables in DW1 before performing the automated data loads.',
+                'B. Assign a smaller resource class to the automated data load queries.',
+                'C. Assign a larger resource class to the automated data load queries.',
+                'D. Create sampled statistics for every column in each table of DW1.'
+            ],
+            'answer': 'C. Assign a larger resource class to the automated data load queries.',
+            'explanation': '''Explanation: Correct Answer: C
+    The performance capacity of a query is determined by the user's resource class.
+    Resource classes are pre-determined resource limits in Synapse SQL pool that govern compute resources and concurrency for query execution.
+    Resource classes can help you configure resources for your queries by setting limits on the number of queries that run concurrently and on the compute-resources assigned to each query. There's a trade-off between memory and concurrency.
+    Smaller resource classes reduce the maximum memory per query, but increase concurrency.
+    Larger resource classes increase the maximum memory per query, but reduce concurrency.
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/resource-classes-for-workload-management'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool named Pool and a database named DB1. DB1 contains a fact table named Table1. You need to identify the extent of the data skew in Table. What should you do in Synapse Studio?',
+            'choices': [
+                'A. Connect to the built-in pool and run DBCC PDW_SHOWSPACEUSED.',
+                'B. Connect to the built-in pool and run DBCC CHECKALLOC.',
+                'C. Connect to Pool1 and query sys.dm_pdw_node_status.',
+                'D. Connect to Pool1 and query sys.dm_pdw_nodes_db_partition_stats.'
+            ],
+            'answer': 'D. Connect to Pool1 and query sys.dm_pdw_nodes_db_partition_stats.',
+            'explanation': '''Explanation: Correct Answer: D
+    Microsoft recommends the use of sys.dm_pdw_nodes_db_partition_stats to analyze any skewness in the data.
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/cheat-sheet'''
+        },
+        {
+            'question': 'You have a SQL pool in Azure Synapse. You discover that some queries fail or take a long time to complete. You need to monitor for transactions that have rolled back. Which dynamic management view should you query?',
+            'choices': [
+                'A. sys.dm_pdw_request_steps',
+                'B. sys.dm_pdw_nodes_tran_database_transactions',
+                'C. sys.dm_pdw_waits',
+                'D. sys.dm_pdw_exec_sessions'
+            ],
+            'answer': 'B. sys.dm_pdw_nodes_tran_database_transactions',
+            'explanation': '''Explanation: Correct Answer: B
+    You can use Dynamic Management Views (DMVs) to monitor your workload including investigating query execution in SQL pool. If your queries are failing or taking a long time to proceed, you can check and monitor if you have any transactions rolling back.
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-manage-monitor#monitor-transaction-log-rollback'''
+        },
+        {
+            'question': 'You are monitoring an Azure Stream Analytics job. You discover that the Backlogged Input Events metric is increasing slowly and is consistently non-zero. You need to ensure that the job can handle all the events. What should you do?',
+            'choices': [
+                'A. Change the compatibility level of the Stream Analytics job.',
+                'B. Increase the number of streaming units (SUs).',
+                'C. Remove any named consumer groups from the connection and use default.',
+                'D. Create an additional output stream for the existing input stream.'
+            ],
+            'answer': 'B. Increase the number of streaming units (SUs).',
+            'explanation': '''Explanation: Correct Answer: B
+    Backlogged Input Events: Number of input events that are backlogged. A non-zero value for this metric implies that your job isn't able to keep up with the number of incoming events. If this value is slowly increasing or consistently non-zero, you should scale out your job. You should increase the Streaming Units.
+    Note: Streaming Units (SUs) represents the computing resources that are allocated to execute a Stream Analytics job. The higher the number of SUs, the more CPU and memory resources are allocated for your job.
+    Reference: https://docs.microsoft.com/bs-cyrl-ba/azure/stream-analytics/stream-analytics-monitoring'''
+        },
+            {
+            'question': 'You are designing an inventory updates table in an Azure Synapse Analytics dedicated SQL pool. The table will have a clustered columnstore index and will include the following columns: You identify the following usage patterns: Analysts will most commonly analyze transactions for a warehouse. Queries will summarize by product category type, date, and or inventory event type. You need to recommend a partition strategy for the table to minimize query times. On which column should you partition the table?',
+            'choices': [
+                'A. EventTypelD',
+                'B. ProductCategoryTypelD',
+                'C. EventDate',
+                'D. WarehouselD'
+            ],
+            'answer': 'D. WarehouselD',
+            'explanation': '''Explanation: Correct Answer: D
+    The number of records for each warehouse is big enough for a good partitioning.
+    Note: Table partitions enable you to divide your data into smaller groups of data. In most cases, table partitions are created on a date column. When creating partitions on clustered columnstore tables, it is important to consider how many rows belong to each partition. For optimal compression and performance of clustered column-store tables, a minimum of 1 million rows per distribution and partition is needed. Before partitions are created, dedicated SQL pool already divides each table into 60 distributed databases.
+    Reference: https://docs.microsoft.com/en-us/azure/synapse-analvtics/sql-data-warehouse/sql-dat a-warehouse-tables-partition''',
+            'image': 'static/images/image_question_25.jpg'  # Path to the image file
+        },
+        {
+            'question': 'A company purchases loT devices to monitor manufacturing machinery. The company uses an Azure loT Hub to communicate with the loT devices. The company must be able to monitor the devices in real-time. You need to design the solution. What should you recommend?',
+            'choices': [
+                'A. Azure Analysis Services using Azure Portal',
+                'B. Azure Analysis Services using Azure PowerShell',
+                'C. Azure Stream Analytics cloud job using Azure Portal',
+                'D. Azure Data Factory instance using Microsoft Visual Studio'
+            ],
+            'answer': 'C. Azure Stream Analytics cloud job using Azure Portal',
+            'explanation': '''Explanation: Correct Answer: C
+    In a real-world scenario, you could have hundreds of these sensors generating events as a stream. Ideally, a gateway device would run code to push these events to Azure Event Hubs or Azure loT Hubs. Your Stream Analytics job would ingest these events from Event Hubs and run real-time analytics queries against the streams. To create a Stream Analytics job, in the Azure portal, select + Create a resource from the left navigation menu. Then, select Stream Analytics job from Analytics.
+    Reference: https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-get-started-with-azure-stream-analytics-to-process-data-from-iot-devices'''
+        },
+        {
+            'question': 'You have an Azure Databricks resource. You need to log actions that relate to changes in compute for the Databricks resource. Which Databricks services should you log?',
+            'choices': [
+                'A. clusters',
+                'B. workspace',
+                'C. DBFS',
+                'D. SSH',
+                'E. jobs'
+            ],
+            'answer': 'A. clusters',
+            'explanation': '''Explanation: Correct Answer: A
+    Clusters, workspace logs do not have any cluster related resource change.
+    Reference: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html#workspace-level-audit-log-events'''
+        },
+        {
+            'question': 'You are designing a highly available Azure Data Lake Storage solution that will include geo-zone-redundant storage (GZRS). You need to monitor for replication delays that can affect the recovery point objective (RPO). What should you include in the monitoring solution?',
+            'choices': [
+                'A. 5xx: Server Error errors',
+                'B. Average Success E2E Latency',
+                'C. availability',
+                'D. Last Sync Time'
+            ],
+            'answer': 'D. Last Sync Time',
+            'explanation': '''Explanation: Correct Answer: D
+    Because geo-replication is asynchronous, it is possible that data written to the primary region has not yet been written to the secondary region at the time an outage occurs.
+    The Last Sync Time property indicates the last time that data from the primary region was written successfully to the secondary region. All writes made to the primary region before the last sync time are available to be read from the secondary location. Writes made to the primary region after the last sync time property may or may not be available for reads yet.
+    Reference: https://docs.microsoft.com/en-us/azure/storage/common/last-sync-time-get
+    https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.son#check-the-last-sync-time-property'''
         }
-
 ]
