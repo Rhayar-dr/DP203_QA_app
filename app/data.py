@@ -976,5 +976,422 @@ questions = [
     The Last Sync Time property indicates the last time that data from the primary region was written successfully to the secondary region. All writes made to the primary region before the last sync time are available to be read from the secondary location. Writes made to the primary region after the last sync time property may or may not be available for reads yet.
     Reference: https://docs.microsoft.com/en-us/azure/storage/common/last-sync-time-get
     https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy?toc=/azure/storage/blobs/toc.son#check-the-last-sync-time-property'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool. You run PDW_SHOWSPACEUSED(\'dbo. FactInternetSales\'); and get the results shown in the following table. Which statement accurately describes the dbo.FactInternetSales table?',
+            'choices': [
+                'A. All distributions data.',
+                'B. The table contains less than 10,000 rows.',
+                'C. The table uses round-robin distribution.',
+                'D. The table is skewed.'
+            ],
+            'answer': 'D. The table is skewed.',
+            'explanation': '''Explanation: Correct Answer: D
+    Data skew means the data is not distributed evenly across the distributions.
+    Reference: https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-distribute''',
+            'image': 'static/images/image_question_29.jpg'  # Path to the image file
+        },
+        {
+            'question': 'You have two fact tables named Flight and Weather. Queries targeting the tables will be based on the join between the following columns. You need to recommend a solution that maximizes query performance. What should you include in the recommendation?',
+            'choices': [
+                'A. In the tables use a hash distribution of ArrivalDate Time and ReportDateTime.',
+                'B. In the tables use a hash distribution of ArrivalAirportID and AirportID.',
+                'C. In each table, create an IDENTITY column.',
+                'D. In each table, create a column as a composite of the other two columns in the table.'
+            ],
+            'answer': 'B. In the tables use a hash distribution of ArrivalAirportID and AirportID.',
+            'explanation': '''Explanation: Correct Answer: B
+    Hash-distribution improves query performance on large fact tables. Incorrect Answers: 
+    A: Do not use a date column for hash distribution. All data for the same date lands in the same distribution. If several users are all filtering on the same date, then only 1 of the 60 distributions do all the processing work.''',
+            'image': 'static/images/image_question_31.jpg'  # Path to the image file
+        },
+        {
+            'question': 'You are designing an Azure Synapse Analytics dedicated SQL pool. You need to ensure that you can audit access to Personally Identifiable Information (PII). What should you include in the solution?',
+            'choices': [
+                'A. column-level security',
+                'B. dynamic data masking',
+                'C. row-level security (RLS)',
+                'D. sensitivity classifications'
+            ],
+            'answer': 'D. sensitivity classifications',
+            'explanation': '''Explanation: Correct Answer: D
+    Data Discovery & Classification is built into Azure SQL Database, Azure SQL Managed Instance, and Azure Synapse Analytics. It provides basic capabilities for discovering, classifying, labeling, and reporting the sensitive data in your databases.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool that contains a table named Table1. Table1 contains the following: • One billion rows • A clustered columnstore index • A hash-distributed column named Product Key • A column named Sales Date that is of the date data type and cannot be null. Thirty million rows will be added to Table1 each month. You need to partition Table1 based on the Sales Date column. The solution must optimize query performance and data loading. How often should you create a partition?',
+            'choices': [
+                'A. once per month',
+                'B. once per year',
+                'C. once per day',
+                'D. once per week'
+            ],
+            'answer': 'B. once per year',
+            'explanation': '''Explanation: Correct Answer: B
+    Need a minimum of 1 million rows per distribution. Each table has 60 distributions. 30 million rows are added each month. Need 2 months to get a minimum of 1 million rows per distribution in a new partition.
+    Note:
+    When creating partitions on clustered columnstore tables, it is important to consider how many rows belong to each partition. For optimal compression and performance of clustered columnstore tables, a minimum of 1 million rows per distribution and partition is needed. Before partitions are created, dedicated SQL pool already divides each table into 60 distributions.
+    Any partitioning added to a table is in addition to the distributions created behind the scenes. Using this example, if the sales fact table contained 36 monthly partitions, and given that a dedicated SQL pool has 60 distributions, then the sales fact table should contain 60 million rows per month, or 2.1 billion rows when all months are populated. If a table contains fewer than the recommended minimum number of rows per partition, consider using fewer partitions in order to increase the number of rows per partition.
+    We have data split into distribution (60 nodes) and considering that we need a MINIMUM of 1 million rows per distribution, we have:
+    A. once per month = 30 million / 60 = 500k records per partition
+    B. once per year = 360 million / 60 = 6 million records per partition
+    C. once per day = about 1 million / 60 = 16k records per partition
+    D. once per week = about 7.5 million / 60 = 125k records per partition.
+    Reference: https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-partition'''
+        },
+        {
+            'question': 'You have an Azure Databricks workspace that contains a Delta Lake dimension table named Tablel. Table1 is a Type 2 slowly changing dimension (SCD) table. You need to apply updates from a source table to Table1. Which Apache Spark SQL operation should you use?',
+            'choices': [
+                'A. CREATE',
+                'B. UPDATE',
+                'C. ALTER',
+                'D. MERGE'
+            ],
+            'answer': 'D. MERGE',
+            'explanation': '''Explanation: Correct Answer: D
+    The Delta Lake provides the ability to infer the schema for data input, which further reduces the effort required in managing schema changes.
+    The Slowly Changing Data (SCD) Type 2 records all the changes made to each key in the dimensional table. These operations require updating the existing rows to mark the previous values of the keys as old and then inserting new rows as the latest values. Given a source table with the updates and the target table with dimensional data, SCD Type 2 can be expressed with the MERGE operation.'''
+        },
+        {
+            'question': 'You are designing an Azure Data Lake Storage solution that will transform raw JSON files for use in an analytical workload. You need to recommend a format for the transformed files. The solution must meet the following requirements:\n• Contain information about the data types of each column in the files.\n• Support querying a subset of columns in the files.\n• Support read-heavy analytical workloads.\n• Minimize the file size.\nWhat should you recommend?',
+            'choices': [
+                'A. JSON',
+                'B. CSV',
+                'C. Apache Avro',
+                'D. Apache Parquet'
+            ],
+            'answer': 'D. Apache Parquet',
+            'explanation': '''Explanation: Correct Answer: D
+    Parquet, an open-source file format for Hadoop, stores nested data structures in a flat columnar format. Compared to a traditional approach where data is stored in a row-oriented approach, Parquet is more efficient in terms of storage and performance. It is especially good for queries that read particular columns from a wide table (with many columns) since only needed columns are read, and IO is minimized.
+
+    Incorrect:
+    Not C:
+    The Avro format is ideal for storing data in a data lake landing zone because:
+    1. Data from the landing zone is usually read as a whole for further processing by downstream systems (the row-based format is more efficient in this case).
+    2. Downstream systems can easily retrieve table schemas from Avro files (there is no need to store the schemas separately in an external meta store).
+    3. Any source schema change is easily handled (schema evolution).'''
+        },
+        {
+            'question': 'You have an Azure Storage account that contains 100 GB of files. The files contain rows of text and numerical values. 75% of the rows contain description data that has an average length of 1.1 MB. You plan to copy the data from the storage account to an enterprise data warehouse in Azure Synapse Analytics. You need to prepare the files to ensure that the data copies quickly. Solution: You modify the files to ensure that each row is less than 1 MB. Does this meet the goal?',
+            'choices': [
+                'A. Yes',
+                'B. No'
+            ],
+            'answer': 'A. Yes',
+            'explanation': '''Explanation: Correct Answer: A
+    Polybase loads rows that are smaller than 1 MB. PolyBase is a technology that accesses external data stored in Azure Blob storage or Azure Data Lake Store via the T-SQL language. Extract, Load, and Transform (ELT) is a process by which data is extracted from a source system, loaded into a data warehouse, and then transformed.
+
+    The basic steps for implementing a PolyBase ELT for dedicated SQL pool are:
+    1. Extract the source data into text files.
+    2. Land the data into Azure Blob storage or Azure Data Lake Store.
+    3. Prepare the data for loading.
+    4. Load the data into dedicated SQL pool staging tables using PolyBase.
+    5. Transform the data.
+    6. Insert the data into production tables.
+
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-service-capacity-limits
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql/load-data-overview'''
+        },
+        {
+            'question': 'You plan to create a dimension table in Azure Synapse Analytics that will be less than 1 GB. You need to create the table to meet the following requirements: • Provide the fastest query time. • Minimize data movement during queries. Which type of table should you use?',
+            'choices': [
+                'A. replicated',
+                'B. hash distributed',
+                'C. heap',
+                'D. round-robin'
+            ],
+            'answer': 'A. replicated',
+            'explanation': '''Explanation: Correct Answer: A
+    A replicated table has a full copy of the table accessible on each Compute node. Replicating a table removes the need to transfer data among Compute nodes before a join or aggregation. Since the table has multiple copies, replicated tables work best when the table size is less than 2 GB compressed. 2 GB is not a hard limit.
+
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/design-guidance-for-replicated-tables'''
+        },
+        {
+            'question': 'You are designing a dimension table in an Azure Synapse Analytics dedicated SQL pool. You need to create a surrogate key for the table. The solution must provide the fastest query performance. What should you use for the surrogate key?',
+            'choices': [
+                'A. a GUID column',
+                'B. a sequence object',
+                'C. an IDENTITY column'
+            ],
+            'answer': 'C. an IDENTITY column',
+            'explanation': '''Explanation: Correct Answer: C
+    Use IDENTITY to create surrogate keys using a dedicated SQL pool in Azure Synapse Analytics. 
+
+    Note: A surrogate key on a table is a column with a unique identifier for each row. The key is not generated from the table data. Data modelers like to create surrogate keys on their tables when they design data warehouse models. You can use the IDENTITY property to achieve this goal simply and effectively without affecting load performance.
+
+    Reference:
+    https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-tables-identity'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool. You need to create a fact table named Table1 that will store sales data from the last three years. The solution must be optimized for the following query operations: • Show order counts by week. • Calculate sales totals by region. • Calculate sales totals by product. • Find all the orders from a given month. Which data should you use to partition Table1?',
+            'choices': [
+                'A. product',
+                'B. month',
+                'C. week',
+                'D. region'
+            ],
+            'answer': 'B. month',
+            'explanation': '''Explanation: Correct Answer: B
+    When designing a fact table in a data warehouse, it is important to consider the types of queries that will be run against it. In this case, the queries that need to be optimized include: show order counts by week, calculate sales totals by region, calculate sales totals by product, and find all the orders from a given month.
+    Partitioning the table by month would be the best option in this scenario as it would allow for efficient querying of data by month, which is necessary for the query operations described above. For example, it would be easy to find all the orders from a given month by only searching the partition for that specific month.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool named Pool1. Pool contains a table named table1. You load 5 TB of data into table1. You need to ensure that columnstore compression is maximized for table1. Which statement should you execute?',
+            'choices': [
+                'A. DBCC INDEXDEFRAG (pool1, table1)',
+                'B. DBCC DBREINDEX (table1)',
+                'C. ALTER INDEX ALL on table1 REORGANIZE',
+                'D. ALTER INDEX ALL on table1 REBUILD'
+            ],
+            'answer': 'D. ALTER INDEX ALL on table1 REBUILD',
+            'explanation': '''Explanation: Correct Answer: D
+    This statement will rebuild all indexes on table, which can help to maximize columnstore compression. The other options are not appropriate for this task. DBCC INDEXDEFRAG (pool1, table1) is for defragmenting the indexes and DBCC DBREINDEX (table1) is for recreating the indexes. ALTER INDEX ALL on table REORGANIZE is for reorganizing the indexes.'''
+        },
+        {
+            'question': 'You are planning a streaming data solution that will use Azure Databricks. The solution will stream sales transaction data from an online store. The solution has the following specifications: The output data will contain items purchased, quantity, line total sales amount, and line total tax amount. • Line total sales amount and line total tax amount will be aggregated in Databricks. • Sales transactions will never be updated. Instead, new rows will be added to adjust a sale. You need to recommend an output mode for the dataset that will be processed by using Structured Streaming. The solution must minimize duplicate data.',
+            'choices': [
+                'A. Update',
+                'B. Complete',
+                'C. Append'
+            ],
+            'answer': 'A. Update',
+            'explanation': '''Explanation: Correct Answer: A
+    By default, streams run in append mode, which adds new records to the table. Incorrect Answers: B: Complete mode: replace the entire table with every batch. Reference: https://docs.databricks.com/delta/delta-streaming.html'''
+        },
+        {
+            'question': 'You have an enterprise data warehouse in Azure Synapse Analytics named DW1 on a server named Server1. You need to determine the size of the transaction log file for each distribution of DW1.',
+            'choices': [
+                'A. On DW1, execute a query against the sys.database_files dynamic management view.',
+                'B. From Azure Monitor in the Azure portal, execute a query against the logs of DW1.',
+                'C. Execute a query against the logs of DW1 by using the Get-AzOperationalInsightsSearchResult PowerShell cmdlet.',
+                'D. On the master database, execute a query against the sys.dm_pdw_nodes_os_performance_counters dynamic management view.'
+            ],
+            'answer': 'D. On the master database, execute a query against the sys.dm_pdw_nodes_os_performance_counters dynamic management view.',
+            'explanation': '''Explanation: Correct Answer: D
+    As per scenario for transaction log size on each distribution. Reference: https://docs.microsoft.com/en-us/azure/synapse-analytics/sql-data-warehouse/sql-data-warehouse-manage-monitor'''
+        },
+        {
+            'question': 'You are designing an anomaly detection solution for streaming data from an Azure loT hub. The solution must meet the following requirements: • Send the output to Azure Synapse. • Identify spikes and dips in time series data. • Minimize development and configuration effort.',
+            'choices': [
+                'A. Azure Databricks',
+                'B. Azure Stream Analytics',
+                'C. Azure SQL Database'
+            ],
+            'answer': 'B. Azure Stream Analytics',
+            'explanation': '''Explanation: Correct Answer: B
+    You can identify anomalies by routing data via loT Hub to a built-in ML model in Azure Stream Analytics. Reference: https://docs.microsoft.com/en-us/learn/modules/data-anomaly-detection-using-azure-iot-hub/'''
+        },
+        {
+            'question': 'A company uses Azure Stream Analytics to monitor devices. The company plans to double the number of devices that are monitored. You need to monitor a Stream Analytics job to ensure that there are enough processing resources to handle the additional load.',
+            'choices': [
+                'A. Early Input Events',
+                'B. Late Input Events',
+                'C. Watermark delay',
+                'D. Input Deserialization Errors'
+            ],
+            'answer': 'C. Watermark delay',
+            'explanation': '''Explanation: Correct Answer: C
+    There are a number of resource constraints that can cause the streaming pipeline to slow down. The watermark delay metric can rise due to:
+    • Not enough processing resources in Stream Analytics to handle the volume of input events.
+    • Not enough throughput within the input event brokers, so they are throttled.
+    • Output sinks are not provisioned with enough capacity, so they are throttled. The possible solutions vary widely based on the flavor of output service being used.
+    Incorrect Answers:
+    A: Deserialization issues are caused when the input stream of your Stream Analytics job contains malformed messages.
+    Reference: https://docs.microsoft.com/en-us/azure/stream-analytics/stream-analytics-time-handling'''
+        },
+        {
+            'question': 'You have an Azure Data Factory pipeline that is triggered hourly. The pipeline has had 100% success for the past seven days. The pipeline execution fails, and two retries that occur 15 minutes apart also fail. The third failure returns the following error. ErrorCode=UserErrorFileNotFound,Type=Microsoft.DataTransfer.Common.Shared.Hybri Delivery Exception,Message=ADLS Gen2 operation failed for: Operation returned an invalid status code \'NotFound\'. Account: \'contosoproduksouth\'. Filesystem: wwi. Path: \'BIKES/CARBON/year=2021/month=01/day=10/hour=06\'. ErrorCode: \'PathNotFound\'. Message: \'The specified path does not exist.?. RequestId: \'6d269b78-901-001b-4924-e7a7bc000000\'. TimeStamp: \'Sun, 10 Jan 2021 07:45:05',
+            'choices': [
+                'A. The parameter used to generate year=2021/month=01/day=10/hour=06 was incorrect.',
+                'B. From 06:00 to 07:00 on January 10, 2021, there was no data in wwi/BIKES/CARBON.',
+                'C. From 06:00 to 07:00 on January 10, 2021, the file format of data in wwi/BIKES/CARBON was incorrect.',
+                'D. The pipeline was triggered too early.'
+            ],
+            'answer': 'B. From 06:00 to 07:00 on January 10, 2021, there was no data in wwi/BIKES/CARBON.',
+            'explanation': '''Explanation: Correct Answer: B
+    The error message says a missing file, which matches with answer B: missing data from 06:00. The process had re-tried three times, 15 mins apart, which explains that the error was generated at 07:45.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics job that uses Scala. You need to view the status of the job. What should you do?',
+            'choices': [
+                'A. From Synapse Studio, select the workspace. From Monitor, select SQL requests.',
+                'B. From Azure Monitor, run a Kusto query against the AzureDiagnostics table.',
+                'C. From Synapse Studio, select the workspace. From Monitor, select Apache Sparks applications.',
+                'D. From Azure Monitor, run a Kusto query against the SparkLoggingEvent_CL table.'
+            ],
+            'answer': 'C. From Synapse Studio, select the workspace. From Monitor, select Apache Sparks applications.',
+            'explanation': '''Explanation: Correct Answer: C
+    Use Synapse Studio to monitor your Apache Spark applications. To monitor running Apache Spark applications, open "Monitor" and then select "Apache Spark applications". To view the details about the Apache Spark applications that are running, select the submitting Apache Spark application and view the details. If the Apache Spark application is still running, you can monitor the progress.'''
+        },
+        {
+            'question': 'You have an Azure subscription that contains an Azure Synapse Analytics dedicated SQL pool named SQLPool1. SQLPool1 is currently paused. You need to restore the current state of SQLPool1 to a new SQL pool. What should you do first?',
+            'choices': [
+                'A. Create a workspace.',
+                'B. Create a user-defined restore point.',
+                'C. Resume SQLPool1.',
+                'D. Create a new SQL pool.'
+            ],
+            'answer': 'C. Resume SQLPool1.',
+            'explanation': '''Explanation: Correct Answer: C
+    You won't be able to create a restore point when the SQL pool is paused. The correct action is to resume SQLPool1. According to the Microsoft documentation, user-defined restore points can also be created through the Azure portal. To do so:
+    1. Sign in to your Azure portal account.
+    2. Navigate to the dedicated SQL pool you want to create a restore point for.
+    3. Select Overview from the left pane, then select + New Restore Point. If the "New Restore Point" button isn't enabled, ensure that the dedicated SQL pool isn't paused.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics serverless SQL pool named Pool and an Azure Data Lake Storage Gen2 account named storage1. The AllowBlobPublicAccess property is disabled for storagel. You need to create an external data source that can be used by Azure Active Directory Azure AD users to access storage from Pool1. What should you create first?',
+            'choices': [
+                'A. an external resource pool',
+                'B. an external library',
+                'C. database scoped credentials',
+                'D. a remote service binding'
+            ],
+            'answer': 'C. database scoped credentials',
+            'explanation': '''Explanation: Correct Answer: C
+    Security - User must have SELECT permission on an external table to read the data. External tables access underlying Azure storage using the database scoped credential defined in the data source. Note: A database scoped credential is a record that contains the authentication information that is required to connect to a resource outside SQL Server. Most credentials include a Windows user and password.'''
+        },
+        {
+            'question': 'You have an Azure Data Factory pipeline named Pipeline 1. Pipeline1 contains a copy activity that sends data to an Azure Data Lake Storage Gen2 account. Pipeline 1 is executed by a schedule trigger. You change the copy activity sink to a new storage account and merge the changes into the collaboration branch. After Pipeline 1 executes, you discover that data is NOT copied to the new storage account. You need to ensure that the data is copied to the new storage account. What should you do?',
+            'choices': [
+                'A. Publish from the collaboration branch.',
+                'B. Create a pull request.',
+                'C. Modify the schedule trigger.',
+                'D. Configure the change feed of the new storage account.'
+            ],
+            'answer': 'A. Publish from the collaboration branch.',
+            'explanation': '''Explanation: Correct Answer: A
+    CI/CD lifecycle - 
+    1. A development data factory is created and configured with Azure Repos Git. All developers should have permission to author Data Factory resources like pipelines and datasets. 
+    2. A developer creates a feature branch to make a change. They debug their pipeline runs with their most recent changes.
+    3. After a developer is satisfied with their changes, they create a pull request from their feature branch to the main or collaboration branch to get their changes reviewed by peers.
+    4. After a pull request is approved and changes are merged in the main branch, the changes get published to the development factory.
+    Reference:
+    https://docs.microsoft.com/en-us/azure/data-factory/continuous-integration-delivery'''
+        },
+        {
+            'question': 'You need to design a solution that will process streaming data from an Azure Event Hub and output the data to Azure Data Lake Storage. The solution must ensure that analysts can interactively query the streaming data. What should you use?',
+            'choices': [
+                'A. Azure Stream Analytics and Azure Synapse notebooks',
+                'B. Structured Streaming in Azure Databricks',
+                'C. event triggers in Azure Data Factory',
+                'D. Azure Queue storage and read-access geo-redundant storage (RA-GRS)'
+            ],
+            'answer': 'B. Structured Streaming in Azure Databricks',
+            'explanation': '''Explanation: Correct Answer: B
+    B. Structured Streaming in Azure Databricks is the best option for this scenario as it allows for processing of streaming data and outputting it to Azure Data Lake Storage, while also providing the ability for analysts to interactively query the data using Databricks notebooks.
+    Azure Stream Analytics and Azure Synapse notebooks (option A) can also process streaming data and output to Data Lake Storage, but they may not provide the same level of interactivity for analysts.'''
+        },
+        {
+            'question': 'You are creating an Apache Spark job in Azure Databricks that will ingest JSON-formatted data. You need to convert a nested JSON string into a DataFrame that will contain multiple rows. Which Spark SQL function should you use?',
+            'choices': [
+                'A. explode',
+                'B. filter',
+                'C. coalesce',
+                'D. extract'
+            ],
+            'answer': 'A. explode',
+            'explanation': '''Explanation: Correct Answer: A explode
+    The explode function in Spark SQL allows users to split an array column in their DataFrame into multiple rows, duplicating all other column values for each of the values in the array. It is especially useful in scenarios like nested JSON strings which need to be flattened and converted into DataFrames.'''
+        },
+        {
+            'question': 'You are designing database for an Azure Synapse Analytics dedicated SQL pool to support workloads for detecting ecommerce transaction fraud. Data will be combined from multiple ecommerce sites and can include sensitive financial information such as credit card numbers. You need to recommend a solution that meets the following requirements: Users must be able to identify potentially fraudulent transactions. • Users must be able to use credit cards as a potential feature in models. • Users must NOT be able to access the actual credit card numbers. What should you include in the recommendation?',
+            'choices': [
+                'A. Transparent Data Encryption (TDE)',
+                'B. row-level security (RLS)',
+                'C. column-level encryption',
+                'D. Azure Active Directory (Azure AD) pass-through authentication'
+            ],
+            'answer': 'C. column-level encryption',
+            'explanation': '''Explanation: Correct Answer: C. column-level encryption
+    Always Encrypted is a feature designed to protect sensitive data stored in Azure SQL Database or SQL Server databases. By using Always Encrypted, you can ensure that sensitive data, such as credit card numbers or identification numbers, are stored in an encrypted state while allowing users to query the data without giving them access to the encryption keys. It ensures the sensitive data remains confidential and prevents access even to database administrators.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool. You need to ensure that data in the pool is encrypted at rest. The solution must NOT require modifying applications that query the data. What should you do?',
+            'choices': [
+                'A. Enable encryption at rest for the Azure Data Lake Storage Gen2 account.',
+                'B. Enable Transparent Data Encryption (TDE) for the pool.',
+                'C. Use a customer-managed key to enable double encryption for the Azure Synapse workspace.',
+                'D. Create an Azure key vault in the Azure subscription grant access to the pool.'
+            ],
+            'answer': 'B. Enable Transparent Data Encryption (TDE) for the pool.',
+            'explanation': '''Explanation: Transparent Data Encryption (TDE) provides at-rest encryption for database data. This encryption method ensures that your data, including backups and transaction logs, is encrypted while stored on disk. The major advantage of TDE is that it's transparent to the applications querying the data, meaning there's no need to modify any applications. The encryption uses a symmetric key known as the database encryption key, which provides a layer of security against malicious threats to the data.'''
+        },
+        {
+            'question': 'You manage an enterprise data warehouse in Azure Synapse Analytics. Users report slow performance when they run commonly used queries. Users do not report performance changes for infrequently used queries. You need to monitor resource utilization to determine the source of the performance issues. Which metric should you monitor?',
+            'choices': [
+                'A. DWU percentage',
+                'B. Cache hit percentage',
+                'C. DWU limit',
+                'D. Data IO percentage'
+            ],
+            'answer': 'B. Cache hit percentage',
+            'explanation': '''Explanation: The Cache hit percentage metric provides insights into how effectively the workload is leveraging the adaptive cache in dedicated SQL pools in Azure Synapse Analytics. A lower cache hit percentage can indicate that frequently accessed data isn't being stored in the cache, which can slow down the execution of commonly used queries.'''
+        },
+        {
+            'question': 'You manage an enterprise data warehouse in Azure Synapse Analytics. Users report slow performance when they run commonly used queries. Users do not report performance changes for infrequently used queries. You need to monitor resource utilization to determine the source of the performance issues. Which metric should you monitor?',
+            'choices': [
+                'A. Local tempdb percentage',
+                'B. Cache used percentage',
+                'C. Data IO percentage',
+                'D. CPU percentage'
+            ],
+            'answer': 'B. Cache used percentage',
+            'explanation': '''Explanation: The Cache used percentage metric provides insights into how effectively the workload is leveraging the adaptive cache in dedicated SQL pools in Azure Synapse Analytics. Monitoring this metric can help identify if frequently accessed data is being optimally stored in the cache, impacting the performance of commonly used queries.'''
+        },
+        {
+            'question': 'You have an Azure data factory. You need to examine the pipeline failures from the last 180 days. What should you use?',
+            'choices': [
+                'A. the Activity log blade for the Data Factory resource',
+                'B. Pipeline runs in the Azure Data Factory user experience',
+                'C. the Resource health blade for the Data Factory resource',
+                'D. Azure Data Factory activity runs in Azure Monitor'
+            ],
+            'answer': 'D. Azure Data Factory activity runs in Azure Monitor',
+            'explanation': '''Explanation: Azure Data Factory retains pipeline-run data for only 45 days. If you wish to retain the data for longer periods, you should leverage Azure Monitor. This allows you to analyze pipeline failures and other metrics for extended durations, beyond the 45-day limit imposed by Azure Data Factory.'''
+        },
+        {
+            'question': 'A company purchases loT devices to monitor manufacturing machinery. The company uses an Azure loT Hub to communicate with the loT devices. The company must be able to monitor the devices in real-time. You need to design the solution. What should you recommend?',
+            'choices': [
+                'A. Azure Analysis Services using Azure PowerShell',
+                'B. Azure Stream Analytics Edge application using Microsoft Visual Studio',
+                'C. Azure Analysis Services using Microsoft Visual Studio',
+                'D. Azure Data Factory instance using Azure Portal'
+            ],
+            'answer': 'B. Azure Stream Analytics Edge application using Microsoft Visual Studio',
+            'explanation': '''Explanation: Azure Stream Analytics on IoT Edge provides the capability to run near-real-time analytics on IoT devices. This way, intelligence can be deployed closer to the data source, thereby making the most out of the data generated by the devices. Developers can use the Stream Analytics tools provided within Microsoft Visual Studio to design, debug, and test their Stream Analytics Edge jobs. Once these jobs are tested and verified, they can be deployed via the Azure portal to the respective devices.'''
+        },
+        {
+            'question': 'You have an Azure Synapse Analytics dedicated SQL pool named Pool1. Pool1 contains a fact table named Table1. You need to identify the extent of the data skew in Table1. What should you do in Synapse Studio?',
+            'choices': [
+                'A. Connect to Pool1 and run DBCC PDW_SHOWSPACEUSED.',
+                'B. Connect to the built-in pool and run DBCC PDW_SHOWSPACEUSED.',
+                'C. Connect to Pool1 and run DBCC CHECKALLOC.',
+                'D. Connect to the built-in pool and query sys.dm_pdw_sys_info.'
+            ],
+            'answer': 'A. Connect to Pool1 and run DBCC PDW_SHOWSPACEUSED.',
+            'explanation': '''Explanation: Azure Synapse Analytics dedicated SQL pool, formerly known as Azure Synapse Analytics Parallel Data Warehouse, uses a Massively Parallel Processing (MPP) architecture. The DBCC PDW_SHOWSPACEUSED is a system stored procedure designed to check the distribution of data across the compute nodes. By running this command on Pool1 and targeting Table1, the extent of data skew can be identified. The outcome will reveal if the data is uniformly distributed across the compute nodes or if it's skewed toward a particular node.'''
+        },
+        {
+            'question': 'You have an Azure Data Lake Storage Gen2 account that contains two folders named Folder1 and Folder2. You use Azure Data Factory to copy multiple files from Folder1 to Folder2. You receive the following error: "Operation on target Copy_sks failed: Failure happened on \'Sink\' side. ErrorCode=Delimited TextMoreColumns ThanDefined, Type=Microsoft. DataTransfer.Common.Snared. HybridDelivery Exception, Message=Error found when processing \'Csv/Tsv Format Text\' source \'0_2020_11_09_11_43_32.avro\' with row number 53: found more columns than expected column count 27., Source=Microsoft. Data Transfer.Comnon;". What should you do to resolve the error?',
+            'choices': [
+                'A. Change the Copy activity setting to Binary Copy.',
+                'B. Lower the degree of copy parallelism.',
+                'C. Add an explicit mapping.',
+                'D. Enable fault tolerance to skip incompatible rows.'
+            ],
+            'answer': 'A. Change the Copy activity setting to Binary Copy.',
+            'explanation': '''Explanation: The error suggests that there is a discrepancy in the number of columns in the source data (more columns found than expected). The source file is an avro file, and when copying such files, it's crucial to ensure the copy action is binary to prevent errors related to column data interpretation. The reference provided indicates a similar issue resolved by ensuring a binary copy action.'''
+        },
+        {
+            'question': 'A company plans to use Apache Spark analytics to analyze intrusion detection data. You need to recommend a solution to analyze network and system activity data for malicious activities and policy violations. The solution must minimize administrative efforts. What should you recommend?',
+            'choices': [
+                'A. Azure HDInsight',
+                'B. Azure Data Factory',
+                'C. Azure Data Lake Storage',
+                'D. Azure Databricks'
+            ],
+            'answer': 'D. Azure Databricks',
+            'explanation': '''Explanation: Azure Databricks is an Apache Spark-based analytics platform that provides a collaborative environment for building and deploying big data analytics and artificial intelligence solutions. It is highly integrated with other Azure services and provides built-in solutions for various big data and AI tasks, making it an optimal choice for analyzing large-scale data without requiring significant administrative effort. Azure Databricks is designed to simplify the process of building, training, and deploying AI solutions at scale.'''
         }
 ]
