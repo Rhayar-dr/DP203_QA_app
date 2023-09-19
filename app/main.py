@@ -1,22 +1,19 @@
 import streamlit as st
 from data import questions
-import time
 
-def custom_css(font_size, additional_styles=""):
+def custom_css(font_size):
     st.markdown(
         f"""
         <style>
             .css-1y0tads {{
                 font-size: {font_size} !important;
             }}
-            {additional_styles}
         </style>
         """,
         unsafe_allow_html=True,
     )
 
-# Custom CSS for sticky container
-custom_css("18px", ".sticky-container { position: sticky; top: 0; z-index: 100; background-color: white; padding: 1rem; border-bottom: 1px solid #f0f0f0; }")
+custom_css("18px")
 
 st.title("DP203 Exam")
 
@@ -30,45 +27,9 @@ if 'correct_answers' not in st.session_state:
     st.session_state.correct_answers = 0
 if 'incorrect_answers' not in st.session_state:
     st.session_state.incorrect_answers = 0
-if 'start_time' not in st.session_state:
-    st.session_state.start_time = None
-if 'end_time' not in st.session_state:
-    st.session_state.end_time = None
-if 'timer_running' not in st.session_state:
-    st.session_state.timer_running = False
 
-with st.beta_container():
-    with st.beta_expander("Timer and Score", expanded=True):
-        # Timer Buttons & Display at the top
-        if st.button('Start'):
-            st.session_state.start_time = time.time()
-            st.session_state.timer_running = True
-
-        if st.button('Stop'):
-            st.session_state.end_time = time.time()
-            st.session_state.timer_running = False
-
-        if st.button('Reset'):
-            st.session_state.start_time = None
-            st.session_state.end_time = None
-            st.session_state.correct_answers = 0
-            st.session_state.incorrect_answers = 0
-            st.session_state.timer_running = False
-
-        if st.session_state.start_time:
-            elapsed_time = time.time() - st.session_state.start_time
-        else:
-            elapsed_time = 0
-
-        if st.session_state.end_time:
-            elapsed_time = st.session_state.end_time - st.session_state.start_time
-
-        st.markdown(f"**Timer**: {int(elapsed_time // 60)} minutes and {int(elapsed_time % 60)} seconds")
-        st.markdown(f"**Correct Answers**: {st.session_state.correct_answers}")
-        st.markdown(f"**Incorrect Answers**: {st.session_state.incorrect_answers}")
-
-        if st.session_state.timer_running:
-            st.markdown('<meta http-equiv="refresh" content="1">', unsafe_allow_html=True)
+# Display score statically on the top
+st.markdown(f"**Score**: {st.session_state.correct_answers} Correct, {st.session_state.incorrect_answers} Incorrect")
 
 for idx, q in enumerate(questions, 1):
     st.markdown(f"**Question {idx}**: {q['question']}", unsafe_allow_html=True)
