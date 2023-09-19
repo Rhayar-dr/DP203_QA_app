@@ -31,6 +31,10 @@ if 'incorrect_answers' not in st.session_state:
 # Display score statically on the top
 st.markdown(f"**Score**: {st.session_state.correct_answers} Correct, {st.session_state.incorrect_answers} Incorrect")
 
+if st.button("Reset Score"):
+    st.session_state.correct_answers = 0
+    st.session_state.incorrect_answers = 0
+
 for idx, q in enumerate(questions, 1):
     st.markdown(f"**Question {idx}**: {q['question']}", unsafe_allow_html=True)
     if 'image' in q:
@@ -45,6 +49,17 @@ for idx, q in enumerate(questions, 1):
         else:
             st.session_state.incorrect_answers += 1
             st.error(f"Wrong answer. The correct answer is {q['answer']} and the explanation is: \n\n {q['explanation']}.")
+
+if st.button("End Test"):
+    labels = 'Correct Answers', 'Incorrect Answers'
+    sizes = [st.session_state.correct_answers, st.session_state.incorrect_answers]
+    colors = ['green', 'red']
+    explode = (0.1, 0)  # explode 1st slice for emphasis
+
+    st.plotly_chart({
+        "data": [{"type": "pie", "labels": labels, "values": sizes, "hoverinfo":"label+percent", "textinfo":"value", "textfont_size":20, "marker": {"colors": colors}}],
+        "layout": {"title": "Test Results"}
+    })
 
 # Donation Note at the bottom
 st.markdown("If you found this app helpful, consider making a donation to support development. Thank you! 🙏")
