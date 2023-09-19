@@ -30,7 +30,7 @@ if 'incorrect_answers' not in st.session_state:
     st.session_state.incorrect_answers = 0
 
 # Display score statically on the top
-st.markdown(f"**Score**: {st.session_state.correct_answers} Correct, {st.session_state.incorrect_answers} Incorrect")
+st.markdown(f"**Scoring result at the bottom of the page**")
 
 if st.button("Reset Score"):
     st.session_state.correct_answers = 0
