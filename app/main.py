@@ -51,6 +51,9 @@ for idx, q in enumerate(questions, 1):
             st.session_state.incorrect_answers += 1
             st.error(f"Wrong answer. The correct answer is {q['answer']} and the explanation is: \n\n {q['explanation']}.")
 
+# Display the updated score
+st.markdown(f"**Score**: {st.session_state.correct_answers} Correct, {st.session_state.incorrect_answers} Incorrect")
+
 if st.button("End Test"):
     labels = ['Correct Answers', 'Incorrect Answers']
     values = [st.session_state.correct_answers, st.session_state.incorrect_answers]
