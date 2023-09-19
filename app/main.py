@@ -1,5 +1,6 @@
 import streamlit as st
 from data import questions
+import plotly.graph_objects as go
 
 def custom_css(font_size):
     st.markdown(
@@ -51,15 +52,14 @@ for idx, q in enumerate(questions, 1):
             st.error(f"Wrong answer. The correct answer is {q['answer']} and the explanation is: \n\n {q['explanation']}.")
 
 if st.button("End Test"):
-    labels = 'Correct Answers', 'Incorrect Answers'
-    sizes = [st.session_state.correct_answers, st.session_state.incorrect_answers]
+    labels = ['Correct Answers', 'Incorrect Answers']
+    values = [st.session_state.correct_answers, st.session_state.incorrect_answers]
     colors = ['green', 'red']
-    explode = (0.1, 0)  # explode 1st slice for emphasis
 
-    st.plotly_chart({
-        "data": [{"type": "pie", "labels": labels, "values": sizes, "hoverinfo":"label+percent", "textinfo":"value", "textfont_size":20, "marker": {"colors": colors}}],
-        "layout": {"title": "Test Results"}
-    })
+    fig = go.Figure(data=[go.Pie(labels=labels, values=values, textinfo='label+percent', marker_colors=colors, pull=[0.1, 0])])
+    fig.update_layout(title_text="Test Results")
+
+    st.write(fig)
 
 # Donation Note at the bottom
 st.markdown("If you found this app helpful, consider making a donation to support development. Thank you! 🙏")
